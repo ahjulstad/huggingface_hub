@@ -1187,7 +1187,8 @@ def hf_hub_download(
                 raise OSError("Distant resource does not seem to be on huggingface.co (missing commit header).")
 
             # Etag must exist
-            etag = metadata.etag
+            # Replace " from etag (to avoid errors with lock file)
+            etag = metadata.etag.replace('"','_')
             # We favor a custom header indicating the etag of the linked resource, and
             # we fallback to the regular etag header.
             # If we don't have any of those, raise an error.
